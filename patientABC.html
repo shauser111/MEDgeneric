@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Study: Patient EH</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- GSAP CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles from example, adapted for dark blue theme */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827; /* Dark Blue-Gray 900 */
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+        }
+        /* Base slide styling */
+        .slide {
+            opacity: 0;
+            visibility: hidden;
+            display: none;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            padding: 2.5rem; /* p-10 */
+            color: #f3f4f6; /* gray-100 */
+        }
+        /* Active slide styling */
+        .slide.active {
+            display: block;
+            opacity: 1;
+            visibility: visible;
+        }
+        /* Main presentation container */
+        #presentation-container {
+            position: relative;
+            overflow: hidden; 
+        }
+        /* Image wrapper for border and animation */
+        .slide-image-wrapper {
+            overflow: hidden;
+            border-radius: 0.5rem;
+            border: 3px solid #06b6d4; /* Electric/Light Blue */
+        }
+        /* Image itself, for the "picture move" */
+        .slide-image {
+            transform-origin: center center;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        /* Styling for the text-reveal spans */
+        [data-anim="text-reveal"] span {
+            display: inline-block;
+            margin-right: 0.25em; /* Adjust spacing as needed */
+        }
+        /* Tiled layout styles */
+        .tile {
+            background-color: #1f2937; /* Medium Blue-Gray 800 */
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            border: 2px solid #06b6d4; /* Electric/Light Blue */
+        }
+        .tile h3 {
+            color: #06b6d4; /* Electric/Light Blue */
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen p-4">
+
+    <!-- Main Presentation Wrapper -->
+    <div class="w-full max-w-7xl bg-[#1f2937] rounded-2xl shadow-2xl overflow-hidden border-4 border-[#06b6d4]">
+        
+        <!-- Header -->
+        <header class="bg-[#111827] text-[#06b6d4] p-4 text-center border-b-4 border-[#06b6d4]">
+            <h1 class="text-3xl md:text-4xl">Patient ABC: A Case Study</h1>
+        </header>
+
+        <!-- Slide Container -->
+        <main id="presentation-container" class="flex flex-col justify-center" style="height: 650px;">
+
+            <!-- Slide 1: Title -->
+            <div class="slide active">
+                <div class="flex flex-col justify-center h-full text-center">
+                    <h2 data-anim="text-reveal" class="text-6xl text-white mb-4">Case Study: Patient EH</h2>
+                    <p data-anim="fade-in" class="text-3xl text-gray-300">An Academic Review of Lab, Medication, and Lifestyle Data</p>
+                    <p data-anim="fade-in" class="text-xl text-gray-400 mt-6">Subject: 16-Year-Old Male</p>
+                </div>
+            </div>
+
+            <!-- Slide 2: Overview -->
+            <div class="slide">
+                <div class="flex flex-col md:flex-row items-center gap-8 h-full">
+                    <div class="md:w-1/2">
+                        <h2 data-anim="text-reveal" class="text-5xl text-white mb-4">Patient Profile</h2>
+                        <ul class="space-y-4 text-lg text-gray-300 list-inside list-disc">
+                           <li data-anim="fly-in-left"><strong>Age:</strong> 16</li>
+                           <li data-anim="fly-in-left"><strong>Sex:</strong> Male</li>
+                           <li data-anim="fly-in-left"><strong>Status:</strong> Fasting at time of lab collection.</li>
+                           <li data-anim="fly-in-left"><strong>Key Challenge:</strong> Navigating complex polypharmacy while managing metabolic side effects and severe insomnia.</li>
+                        </ul>
+                    </div>
+                    <div class="md:w-1/2 slide-image-wrapper" style="height: 400px;">
+                        <img src="Patient+Profile.png" alt="Patient profile icon" class="slide-image">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3: Lab Dashboard -->
+            <div class="slide">
+                <div class="flex flex-col justify-center h-full">
+                    <h2 data-anim="text-reveal" class="text-5xl text-white mb-6 text-center">Laboratory Dashboard</h2>
+                    <p data-anim="fade-in" class="text-center text-lg text-gray-300 mb-6">Key findings from the 10/22/2025 report show several out-of-range biomarkers.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div data-anim="fly-in-up" class="tile text-center">
+                            <h3 class="text-3xl mb-2">Metabolic & Liver</h3>
+                            <p class="text-2xl font-bold text-yellow-400">FLAGGED</p>
+                            <p>High Triglycerides</p>
+                            <p>Low HDL Cholesterol</p>
+                            <p>High ALT (Liver Enzyme)</p>
+                        </div>
+                        <div data-anim="fly-in-up" class="tile text-center">
+                            <h3 class="text-3xl mb-2">Endocrine & Vitamin</h3>
+                            <p class="text-2xl font-bold text-fuchsia-500">FLAGGED</p>
+                            <p>High Prolactin</p>
+                            <p>Low Vitamin D (Insufficient)</p>
+                        </div>
+                        <div data-anim="fly-in-up" class="tile text-center">
+                            <h3 class="text-3xl mb-2">Pharmacology</h3>
+                            <p class="text-2xl font-bold text-lime-400">FLAGGED</p>
+                            <p>Low Oxcarbazepine Level</p>
+                            <p>(Sub-therapeutic trough)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4: Chart 1: Metabolic -->
+            <div class="slide">
+                <div class="flex flex-col md:flex-row items-center gap-8 h-full">
+                    <div class="md:w-1/2">
+                        <h2 data-anim="text-reveal" class="text-4xl text-white mb-4">Deep Dive: Metabolic Panel</h2>
+                         <ul class="space-y-4 text-lg text-gray-300 list-inside list-disc">
+                           <li data-anim="fly-in-left"><strong>Triglycerides (114):</strong> Flagged as High. This is a type of fat (lipid) in the blood.</li>
+                           <li data-anim="fly-in-left"><strong>HDL Cholesterol (39):</strong> Flagged as Low. This is the "good" cholesterol.</li>
+                           <li data-anim="fly-in-left"><strong>ALT (SGPT) (35):</strong> Flagged as High. This is a liver enzyme; elevation can suggest liver stress or inflammation.</li>
+                        </ul>
+                    </div>
+                    <div class="md:w-1/2" style="height: 450px;" data-anim="fly-in-right">
+                        <canvas id="metabolicChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 5: Chart 2: Endocrine -->
+            <div class="slide">
+                <div class="flex flex-col md:flex-row items-center gap-8 h-full">
+                    <div class="md:w-1/2" style="height: 450px;" data-anim="fly-in-left">
+                        <canvas id="endocrineChart"></canvas>
+                    </div>
+                    <div class="md:w-1/2">
+                        <h2 data-anim="text-reveal" class="text-4xl text-white mb-4">Deep Dive: Endocrine</h2>
+                         <ul class="space-y-4 text-lg text-gray-300 list-inside list-disc">
+                           <li data-anim="fly-in-right"><strong>Prolactin (51.8):</strong> Significantly High. This hormone is produced by the pituitary gland.</li>
+                           <li data-anim="fly-in-right"><strong>Vitamin D (26.7):</strong> Insufficient. This level is below the recommended range for bone and metabolic health.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 6: Chart 3: Medication Level -->
+            <div class="slide">
+                <div class="flex flex-col md:flex-row items-center gap-8 h-full">
+                    <div class="md:w-1/2">
+                        <h2 data-anim="text-reveal" class="text-4xl text-white mb-4">Deep Dive: Medication Level</h2>
+                         <ul class="space-y-4 text-lg text-gray-300 list-inside list-disc">
+                           <li data-anim="fly-in-left"><strong>Oxcarbazepine (3):</strong> Flagged as Low. This is a "trough" level, measured just before the next dose.</li>
+                           <li data-anim="fly-in-left"><strong>Finding:</strong> The level is below the standard therapeutic range (10-35 ug/mL). This isn't necessarily bad if symptoms are controlled, but it's important data.</li>
+                        </ul>
+                    </div>
+                    <div class="md:w-1/2" style="height: 450px;" data-anim="fly-in-right">
+                        <canvas id="pharmaChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 7: The Medication Connection (Merged) -->
+            <div class="slide">
+                <div class="flex flex-col h-full">
+                    <h2 data-anim="text-reveal" class="text-5xl text-white mb-10 text-center" style="padding-top: 1.5rem;">The Medication Connection</h2>
+                    
+                    <div class="flex-grow relative">
+                        <!-- Grid 1: Added position-absolute -->
+                        <div id="med-grid-1" class="grid grid-cols-1 md:grid-cols-2 gap-6 absolute w-full">
+                            <div class="tile">
+                                <h3 class="text-3xl mb-2">Metabolic Side Effects</h3>
+                                <p><strong>Paliperidone (Invega)</strong> and <strong>Mirtazapine (Remeron)</strong> are strongly associated in academic literature with causing metabolic changes.</p>
+                                <p class="mt-4 font-bold text-yellow-400">This is a likely contributor to the High Triglycerides, Low HDL, and High ALT.</p>
+                            </div>
+                            <div class="tile">
+                                <h3 class="text-3xl mb-2">Endocrine Side Effects</h3>
+                                <p><strong>Paliperidone (Invega)</strong> is a well-known cause of hyperprolactinemia (high prolactin). It works by blocking dopamine, which in turn allows prolactin levels to rise.</p>
+                                <p class="mt-4 font-bold text-fuchsia-500">This is the most direct explanation for the 51.8 ng/mL Prolactin level.</p>
+                            </div>
+                        </div>
+
+                        <!-- Grid 2 (Initially Hidden): Added position-absolute -->
+                        <div id="med-grid-2" class="grid grid-cols-1 md:grid-cols-2 gap-6 absolute w-full" style="display: none; opacity: 0;">
+                            <div class="tile">
+                                <h3 class="text-3xl mb-2">Vitamin D Depletion</h3>
+                                <p><strong>Oxcarbazepine (Trileptal)</strong> is known to accelerate the body's breakdown of Vitamin D. The patient's level is low (26.7) *despite* taking a 2000 IU daily supplement.</p>
+                                <p class="mt-4 font-bold text-lime-400">This suggests the medication is depleting Vitamin D faster than it can be replaced by the current supplement dose.</p>
+                            </div>
+                            <div class="tile">
+                                <h3 class="text-3xl mb-2">The Full Picture</h3>
+                                <p>The lab results are not random. They form a clear pattern that directly correlates with the known side-effect profiles of the patient's scheduled medications.</p>
+                                <p class="mt-4 font-bold text-gray-300">This is known as an iatrogenic (medication-induced) effect.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Slide 8: Focus on Insomnia -->
+            <div class="slide">
+                <div class="flex flex-col md:flex-row items-center gap-8 h-full">
+                    <div class="md:w-1/2">
+                        <h2 data-anim="text-reveal" class="text-5xl text-white mb-4">Focus: The Sleep Challenge</h2>
+                        <p data-anim="fly-in-left" class="text-lg text-gray-300 mb-4">A key complaint is severe insomnia, which presents a complex picture given the medication list.</p>
+                         <ul class="space-y-2 text-lg text-gray-300 list-inside list-disc">
+                           <li data-anim="fly-in-left"><strong>Daily Sedating Med:</strong> Mirtazapine (Remeron) is taken daily and is known to be highly sedating.</li>
+                           <li data-anim="fly-in-left"><strong>Helpful Additions:</strong> Recent use of Trazodone and Benadryl (10/17, 10/18, 10/24, 10/25) has reportedly improved sleep.</li>
+                           <li data-anim="fly-in-left"><strong>Unhelpful PRN:</strong> Chlorpromazine (taken Fridays/Sundays) is reported to *not* provide restful sleep.</li>
+                           <li data-anim="fly-in-left"><strong>Conclusion:</strong> The underlying insomnia is severe enough that Mirtazapine alone is insufficient. The positive effect from Trazodone/Benadryl is a key data point, while the negative effect from Chlorpromazine is also important.</li>
+                        </ul>
+                    </div>
+                    <div class="md:w-1/2 slide-image-wrapper" style="height: 450px;">
+                        <img src="https://placehold.co/600x450/1f2937/06b6d4?text=Insomnia+Challenge" alt="Insomnia and sleep" class="slide-image">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 9: The Path Forward: Diet -->
+            <div class="slide">
+                <div class="flex flex-col md:flex-row items-center gap-8 h-full">
+                     <div class="md:w-1/2 slide-image-wrapper" style="height: 450px;">
+                        <img src="https://placehold.co/600x450/1f2937/06b6d4?text=Nutrition+Plan" alt="Healthy food" class="slide-image">
+                    </div>
+                    <div class="md:w-1/2">
+                        <h2 data-anim="text-reveal" class="text-4xl text-white mb-4">Action Plan: Nutrition</h2>
+                        <p data-anim="fly-in-right" class="text-lg text-gray-300 mb-4">Diet is the most powerful tool to directly combat the metabolic side effects (High Triglycerides, Low HDL, High ALT).</p>
+                        <ul class="space-y-4 text-lg text-gray-300 list-inside list-disc">
+                           <li data-anim="fly-in-right"><strong>Limit Sugars & Refined Carbs:</strong> These are the primary drivers of high triglycerides.</li>
+                           <li data-anim="fly-in-right"><strong>Increase Healthy Fats:</strong> Avocado, nuts, and olive oil can help raise "good" HDL cholesterol.</li>
+                           <li data-anim="fly-in-right"><strong>Focus on Fiber:</strong> Whole grains, fruits, and vegetables support liver health and improve metabolic function.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 10: The Path Forward: Exercise -->
+            <div class="slide">
+                <div class="flex flex-col md:flex-row items-center gap-8 h-full">
+                    <div class="md:w-1/2">
+                        <h2 data-anim="text-reveal" class="text-4xl text-white mb-4">Action Plan: Exercise</h2>
+                        <p data-anim="fly-in-left" class="text-lg text-gray-300 mb-4">Exercise works with diet to reverse metabolic issues and is also a powerful intervention for sleep and mood.</p>
+                         <ul class="space-y-4 text-lg text-gray-300 list-inside list-disc">
+                           <li data-anim="fly-in-left"><strong>Cardiovascular Exercise:</strong> 30-60 minutes daily is proven to lower triglycerides and support liver health.</li>
+                           <li data-anim="fly-in-left"><strong>Strength Training:</strong> Building muscle mass increases overall metabolic rate, helping the body process energy more efficiently.</li>
+                           <li data-anim="fly-in-left"><strong>Sleep & Mood:</strong> Regular exercise is one of the most effective non-pharmacological treatments for insomnia.</li>
+                        </ul>
+                    </div>
+                    <div class="md:w-1/2 slide-image-wrapper" style="height: 450px;">
+                        <img src="https://placehold.co/600x450/1f2937/06b6d4?text=Exercise+Plan" alt="Person exercising" class="slide-image">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 11: Wellness Triangle -->
+            <div class="slide">
+                 <div class="flex flex-col items-center justify-center h-full">
+                    <h2 data-anim="text-reveal" class="text-6xl text-white mb-6">The Wellness Triangle</h2>
+                    <div class="w-full max-w-lg slide-image-wrapper" style="height: 350px;">
+                        <img src="https://placehold.co/600x350/1f2937/06b6d4?text=Meds+|+Diet+|+Exercise" alt="Triangle diagram" class="slide-image">
+                    </div>
+                    <p data-anim="fade-in" class="text-xl text-gray-300 mt-4 max-w-2xl text-center">Medications are necessary, but they create side effects. Diet and Exercise are the essential counterparts required to manage those effects and achieve true stability.</p>
+                </div>
+            </div>
+
+            <!-- Slide 12: Q&A -->
+            <div class="slide">
+                 <div class="flex flex-col items-center justify-center h-full text-center">
+                    <h2 data-anim="text-reveal" class="text-6xl text-white mb-4">Key Takeaways</h2>
+                    <p data-anim="fade-in" class="text-2xl text-gray-300 max-w-3xl">This is a classic case of iatrogenic (medication-induced) effects. The path forward involves a proactive, non-pharmacological strategy (diet, exercise) to manage the unavoidable metabolic and vitamin-related side effects of the necessary psychiatric medication.</p>
+                </div>
+            </div>
+
+
+        </main>
+
+        <!-- Footer Navigation -->
+        <footer class="bg-black p-4 flex justify-between items-center border-t-4 border-[#06b6d4]">
+            <button id="prevBtn" class="bg-[#06b6d4] text-black font-bold py-2 px-6 rounded-lg hover:bg-cyan-300 disabled:bg-gray-600 disabled:text-gray-400 disabled:cursor-not-allowed transition-all transform hover:scale-105">
+                Previous
+            </button>
+            <div id="slide-counter" class="text-white font-medium text-lg">Slide 1 of 12</div>
+            <button id="nextBtn" class="bg-[#06b6d4] text-black font-bold py-2 px-6 rounded-lg hover:bg-cyan-300 disabled:bg-gray-600 disabled:text-gray-400 disabled:cursor-not-allowed transition-all transform hover:scale-105">
+                Next
+            </button>
+        </footer>
+    </div>
+
+    <!-- GSAP & Chart.js Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const slideCounter = document.getElementById('slide-counter');
+            let currentSlide = 0;
+            let isAnimating = false;
+            
+            // State for multi-part slide
+            let slide7State = 1; // 1 = part 1, 2 = part 2
+
+            // Chart.js Default Styling
+            Chart.defaults.color = '#f3f4f6';
+            Chart.defaults.borderColor = '#374151';
+
+            // Pre-process text-reveal elements
+            document.querySelectorAll('[data-anim="text-reveal"]').forEach(el => {
+                const words = el.textContent.split(' ').filter(word => word.length > 0);
+                el.innerHTML = '';
+                words.forEach(word => {
+                    const wordSpan = document.createElement('span');
+                    wordSpan.textContent = word;
+                    el.appendChild(wordSpan);
+                });
+            });
+            
+            // --- Chart Creation Functions ---
+            
+            function createMetabolicChart() {
+                const ctx = document.getElementById('metabolicChart');
+                if (!ctx) return;
+                if (Chart.getChart(ctx)) return; 
+                
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Triglycerides', 'HDL', 'ALT (SGPT)'],
+                        datasets: [
+                            {
+                                label: 'Patient Result',
+                                data: [114, 39, 35],
+                                backgroundColor: ['#facc15', '#facc15', '#facc15'], // Yellow
+                                borderWidth: 2,
+                                borderColor: '#facc15'
+                            },
+                            {
+                                label: 'Reference (Low End)',
+                                data: [0, 40, 0],
+                                backgroundColor: ['#a3e635', '#a3e635', '#a3e635'], // Lime
+                                borderWidth: 2,
+                                borderColor: '#a3e635'
+                            },
+                            {
+                                label: 'Reference (High End)',
+                                data: [89, 100, 30], // Using 100 for HDL as a generic "good" upper
+                                backgroundColor: ['#a3e635', '#a3e635', '#a3e635'], // Lime
+                                borderWidth: 2,
+                                borderColor: '#a3e635'
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: { display: true, text: 'Metabolic & Liver Panel', fontSize: 18 },
+                            legend: { display: true, position: 'bottom' }
+                        },
+                        scales: {
+                            y: { beginAtZero: true, title: { display: true, text: 'mg/dL or IU/L' } }
+                        }
+                    }
+                });
+            }
+
+            function createEndocrineChart() {
+                const ctx = document.getElementById('endocrineChart');
+                if (!ctx) return;
+                if (Chart.getChart(ctx)) return;
+
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Prolactin', 'Vitamin D'],
+                        datasets: [
+                            {
+                                label: 'Patient Result',
+                                data: [51.8, 26.7],
+                                backgroundColor: ['#d946ef', '#facc15'], // Fuchsia, Yellow
+                                borderWidth: 2,
+                                borderColor: ['#d946ef', '#facc15']
+                            },
+                             {
+                                label: 'Reference Range (Low)',
+                                data: [3.6, 30.0],
+                                backgroundColor: '#a3e635', // Lime
+                                borderWidth: 2,
+                                borderColor: '#a3e635'
+                            },
+                            {
+                                label: 'Reference Range (High)',
+                                data: [31.5, 100.0],
+                                backgroundColor: '#a3e635', // Lime
+                                borderWidth: 2,
+                                borderColor: '#a3e635'
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        indexAxis: 'y', // Horizontal bar chart
+                        plugins: {
+                            title: { display: true, text: 'Endocrine & Vitamin Panel', fontSize: 18 },
+                            legend: { display: true, position: 'bottom' }
+                        },
+                        scales: {
+                            x: { beginAtZero: true, title: { display: true, text: 'ng/mL' } }
+                        }
+                    }
+                });
+            }
+            
+            function createPharmaChart() {
+                const ctx = document.getElementById('pharmaChart');
+                if (!ctx) return;
+                if (Chart.getChart(ctx)) return;
+                
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Oxcarbazepine Metabolite'],
+                        datasets: [
+                            {
+                                label: 'Patient Trough Level',
+                                data: [3],
+                                backgroundColor: '#facc15', // Yellow
+                                borderWidth: 2,
+                                borderColor: '#facc15',
+                                barPercentage: 0.5,
+                                categoryPercentage: 0.5
+                            },
+                             {
+                                label: 'Therapeutic Range',
+                                data: [[10, 35]], // [min, max]
+                                backgroundColor: '#a3e635', // Lime
+                                borderWidth: 2,
+                                borderColor: '#a3e635',
+                                barPercentage: 0.5,
+                                categoryPercentage: 0.5
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: { display: true, text: 'Medication Trough Level (ug/mL)', fontSize: 18 },
+                            legend: { display: true, position: 'bottom' }
+                        },
+                        scales: {
+                            y: { beginAtZero: true, max: 40 }
+                        }
+                    }
+                });
+            }
+
+
+            // --- GSAP Animation Function ---
+            function createSlideAnimation(slide) {
+                const tl = gsap.timeline({
+                    onComplete: () => {
+                        isAnimating = false;
+                    }
+                });
+                
+                const textRevealWords = slide.querySelectorAll('[data-anim="text-reveal"] span');
+                const flyInLeft = slide.querySelectorAll('[data-anim="fly-in-left"]');
+                const flyInRight = slide.querySelectorAll('[data-anim="fly-in-right"]');
+                const flyInUp = slide.querySelectorAll('[data-anim="fly-in-up"]');
+                const fadeIn = slide.querySelectorAll('[data-anim="fade-in"]');
+                const image = slide.querySelector('.slide-image');
+                
+                slide.classList.add('active');
+                tl.set(slide, { autoAlpha: 1 });
+                
+                // Check for and create charts
+                if (slide.querySelector('#metabolicChart')) createMetabolicChart();
+                if (slide.querySelector('#endocrineChart')) createEndocrineChart();
+                if (slide.querySelector('#pharmaChart')) createPharmaChart();
+
+                if (image) {
+                     gsap.fromTo(image,
+                         { scale: 1.15, filter: 'blur(10px)' },
+                         { scale: 1, filter: 'blur(0px)', duration: 1.5, ease: "power2.out" }
+                     );
+                }
+                
+                tl.from(textRevealWords, { autoAlpha: 0, y: 30, rotateX: -90, stagger: 0.05, duration: 0.8, ease: "power2.out" }, ">0.2");
+                tl.from(flyInLeft, { autoAlpha: 0, x: -50, stagger: 0.1, duration: 0.5, ease: "power2.out" }, "<0.2");
+                tl.from(flyInRight, { autoAlpha: 0, x: 50, stagger: 0.1, duration: 0.5, ease: "power2.out" }, "<");
+                
+                // Handle Slide 7 (index 6)
+                if (slide === slides[6]) {
+                    const grid1Tiles = document.getElementById('med-grid-1').children;
+                    const grid2 = document.getElementById('med-grid-2');
+                    
+                    // Set initial state
+                    gsap.set(grid1Tiles, { autoAlpha: 1 }); // Make sure they are visible for the animation
+                    gsap.set(grid2, { autoAlpha: 0, display: 'none' });
+                    gsap.set(document.getElementById('med-grid-1'), { autoAlpha: 1, display: 'grid' });
+
+                    tl.from(grid1Tiles, { autoAlpha: 0, y: 50, stagger: 0.1, duration: 0.5, ease: "power2.out" }, "<");
+                } else {
+                    tl.from(flyInUp, { autoAlpha: 0, y: 50, stagger: 0.1, duration: 0.5, ease: "power2.out" }, "<");
+                }
+                
+                tl.from(fadeIn, { autoAlpha: 0, stagger: 0.1, duration: 0.5, ease: "power2.out" }, "<");
+            }
+
+            function playFadeTransition(onComplete) {
+                if (isAnimating) return;
+                isAnimating = true;
+                const oldSlide = slides[currentSlide];
+                gsap.to(oldSlide, { 
+                    autoAlpha: 0, 
+                    duration: 0.4, 
+                    ease: 'power2.inOut',
+                    onComplete: () => { if (onComplete) onComplete(); }
+                });
+            }
+
+            function showSlide(newIndex, oldIndex) {
+                if (isAnimating) return;
+                
+                const onTransitionComplete = () => {
+                     if (oldIndex !== undefined) {
+                        slides[oldIndex].classList.remove('active');
+                        const oldImage = slides[oldIndex].querySelector('.slide-image');
+                        if (oldImage) gsap.killTweensOf(oldImage);
+                        
+                        // **** FIXED: Reset logic moved here, runs *after* slide is hidden ****
+                        if (oldIndex === 6) { 
+                            slide7State = 1;
+                            const grid1 = document.getElementById('med-grid-1');
+                            const grid2 = document.getElementById('med-grid-2');
+                            gsap.set(grid1, { autoAlpha: 1, display: 'grid', y: 0 }); // Reset y
+                            gsap.set(grid2, { autoAlpha: 0, display: 'none', y: 0 }); // Reset y
+                        }
+                        // **** END FIX ****
+                    }
+                    createSlideAnimation(slides[newIndex]);
+                };
+                playFadeTransition(onTransitionComplete);
+            }
+
+            function updateSlide(newIndex) {
+                if (currentSlide === newIndex || isAnimating) return;
+                
+                const oldSlideIndex = currentSlide;
+                currentSlide = newIndex;
+                
+                // **** REMOVED the reset logic from here to fix the "flash" bug ****
+                
+                slideCounter.textContent = `Slide ${currentSlide + 1} of ${slides.length}`;
+                prevBtn.disabled = currentSlide === 0;
+                nextBtn.disabled = currentSlide === slides.length - 1;
+                
+                showSlide(currentSlide, oldSlideIndex);
+            }
+
+            // --- Event Listeners ---
+
+            nextBtn.addEventListener('click', () => {
+                // **** FIXED: Re-added 'y' animation and lengthened duration ****
+                if (currentSlide === 6 && slide7State === 1 && !isAnimating) { // On Slide 7, part 1
+                    isAnimating = true;
+                    slide7State = 2;
+                    const grid1 = document.getElementById('med-grid-1');
+                    const grid2 = document.getElementById('med-grid-2');
+                    
+                    const tl = gsap.timeline({ onComplete: () => isAnimating = false });
+                    tl.to(grid1, { autoAlpha: 0, y: -30, duration: 0.5, ease: 'power2.in' }) // Fade out and move up
+                      .set(grid1, { display: 'none', y: 0 }) // Reset y
+                      .set(grid2, { display: 'grid', autoAlpha: 0, y: 30 }) // Set initial state (from below)
+                      .to(grid2, { autoAlpha: 1, y: 0, duration: 0.7, ease: 'power2.out' }); // Fade in and move up to 0
+                } 
+                // --- END FIX ---
+                else if (currentSlide < slides.length - 1) {
+                    updateSlide(currentSlide + 1);
+                }
+            });
+
+            prevBtn.addEventListener('click', () => {
+                // **** FIXED: Re-added 'y' animation and lengthened duration ****
+                if (currentSlide === 6 && slide7State === 2 && !isAnimating) { // On Slide 7, part 2
+                    isAnimating = true;
+                    slide7State = 1;
+                    const grid1 = document.getElementById('med-grid-1');
+                    const grid2 = document.getElementById('med-grid-2');
+                    
+                    const tl = gsap.timeline({ onComplete: () => isAnimating = false });
+                    tl.to(grid2, { autoAlpha: 0, y: 30, duration: 0.5, ease: 'power2.in' }) // Fade out and move down
+                      .set(grid2, { display: 'none', y: 0 }) // Reset y
+                      .set(grid1, { display: 'grid', autoAlpha: 0, y: -30 }) // Set initial state (from above)
+                      .to(grid1, { autoAlpha: 1, y: 0, duration: 0.7, ease: 'power2.out' }); // Fade in and move down to 0
+                } 
+                // --- END FIX ---
+                else if (currentSlide > 0) {
+                    updateSlide(currentSlide - 1);
+                }
+            });
+            
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') {
+                    nextBtn.click();
+                } else if (e.key === 'ArrowLeft') {
+                    prevBtn.click();
+                }
+            });
+
+            createSlideAnimation(slides[currentSlide]);
+            prevBtn.disabled = true;
+        });
+    </script>
+</body>
+</html>
+
